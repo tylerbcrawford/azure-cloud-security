@@ -1,23 +1,27 @@
-# **Secure Cloud Infrastructure Deployment on Microsoft Azure**
+![Azure](https://img.shields.io/badge/Azure-0078D4?style=flat&logo=microsoftazure&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=flat&logo=ansible&logoColor=white)
+![DVWA](https://img.shields.io/badge/DVWA-FF6600?style=flat)
 
-## **Introduction**
+# Secure Cloud Infrastructure Deployment on Microsoft Azure
 
-In this project, I designed and implemented a secure, cloud-based web application infrastructure using Microsoft Azure. The primary objective was to create a resilient and secure environment that demonstrates best practices in cloud security, load balancing, and redundancy. This project showcases my practical knowledge in cloud computing, network security, automation using Ansible, and containerization with Docker.
+## Introduction
 
-## **Table of Contents**
+In this project, I designed and implemented a secure, cloud-based web application infrastructure using Microsoft Azure. The primary objective was to create a resilient and secure environment that demonstrates best practices in cloud security, load balancing, and redundancy. This project showcases practical knowledge in cloud computing, network security, automation using Ansible, and containerization with Docker.
+
+## Table of Contents
 
 - [Project Overview](#project-overview)
   - [Objectives](#objectives)
   - [Tools and Technologies](#tools-and-technologies)
 - [Architecture Diagram](#architecture-diagram)
 - [Results and Findings](#results-and-findings)
+- [Skills Demonstrated](#skills-demonstrated)
 - [Conclusion and Reflections](#conclusion-and-reflections)
 
-## **Project Overview**
+## Project Overview
 
-### **Objectives**
-
-The core objectives of this project were:
+### Objectives
 
 - **Design a Secure Virtual Network**: Establish a virtual network within Azure, segmented into subnets and secured with Network Security Groups (NSGs).
 - **Implement a Jump Box for Secure Access**: Deploy a Jump Box to manage access to the virtual machines securely.
@@ -28,26 +32,26 @@ The core objectives of this project were:
 - **Test Redundancy and Failover Capabilities**: Validate the system's ability to handle failures gracefully.
 - **Conduct Security Assessments**: Perform penetration testing and vulnerability assessments.
 
-### **Tools and Technologies**
+### Tools and Technologies
 
-- **Microsoft Azure**
-- **Ansible**
-- **Docker**
-- **LEMP Stack (Linux, Nginx, MariaDB, PHP)**
-- **Jump Box**
-- **Network Security Groups (NSGs)**
-- **Azure Load Balancer**
-- **Damn Vulnerable Web Application (DVWA)**
+- Microsoft Azure
+- Ansible
+- Docker
+- LEMP Stack (Linux, Nginx, MariaDB, PHP)
+- Jump Box
+- Network Security Groups (NSGs)
+- Azure Load Balancer
+- Damn Vulnerable Web Application (DVWA)
 
 For a detailed project report, please refer to the [Project Report](Azure_Project_Report.pdf).
 
-## **Architecture Diagram**
+## Architecture Diagram
 
 ![Network Architecture Diagram](Network_Diagram.png)
 
 *The diagram illustrates the Azure Virtual Network, subnets, Jump Box, web servers, load balancer, and their interconnections.*
 
-## **Results and Findings**
+## Results and Findings
 
 - **High Availability and Redundancy**: The implementation of an Azure Load Balancer alongside multiple web servers ensured continuous availability of the web application. Even during simulated failures, the load balancer successfully redirected traffic to healthy servers, demonstrating effective redundancy and failover capabilities.
 
@@ -57,8 +61,16 @@ For a detailed project report, please refer to the [Project Report](Azure_Projec
 
 - **Successful Security Testing**: Penetration testing and vulnerability assessments were conducted to evaluate the security of the setup. The tests confirmed that the implemented security measures effectively protected the infrastructure against common threats, validating the robustness of the security configurations.
 
-## **Conclusion and Reflections**
+## Skills Demonstrated
+
+- Cloud Infrastructure Design and Deployment (Azure)
+- Network Security Group (NSG) Configuration
+- Infrastructure Automation with Ansible
+- Docker Container Deployment and Management
+- Load Balancing and High Availability Architecture
+- Security Assessment and Penetration Testing
+- Defense-in-Depth Strategy Implementation
+
+## Conclusion and Reflections
 
 This project was a comprehensive exercise in designing and deploying a secure, scalable, and highly available web application infrastructure on Microsoft Azure. It reinforced my understanding of cloud security principles and highlighted the critical role of automation in modern IT environments. Implementing robust security measures, such as Network Security Groups and a Jump Box, emphasized the necessity of defense-in-depth strategies. The experience also underscored the value of redundancy and load balancing in achieving high availability. Overall, this project enhanced my skills in cloud computing, network security, and automation, aligning well with the requirements of a cybersecurity professional.
-
----
