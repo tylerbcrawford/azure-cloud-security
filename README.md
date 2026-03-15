@@ -3,74 +3,37 @@
 ![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=flat&logo=ansible&logoColor=white)
 ![DVWA](https://img.shields.io/badge/DVWA-FF6600?style=flat)
 
-# Secure Cloud Infrastructure Deployment on Microsoft Azure
+# Azure Cloud Security Lab
 
-## Introduction
+Secure web application deployment on Azure — virtual network, Docker containers, Ansible automation, and load balancing. UofT cybersecurity program (2024).
 
-In this project, I designed and implemented a secure, cloud-based web application infrastructure using Microsoft Azure. The primary objective was to create a resilient and secure environment that demonstrates best practices in cloud security, load balancing, and redundancy. This project showcases practical knowledge in cloud computing, network security, automation using Ansible, and containerization with Docker.
+## What I Built
 
-## Table of Contents
+A multi-VM setup on Azure running DVWA (Damn Vulnerable Web Application) behind a load balancer, managed through a Jump Box:
 
-- [Project Overview](#project-overview)
-  - [Objectives](#objectives)
-  - [Tools and Technologies](#tools-and-technologies)
-- [Architecture Diagram](#architecture-diagram)
-- [Results and Findings](#results-and-findings)
-- [Skills Demonstrated](#skills-demonstrated)
-- [Conclusion and Reflections](#conclusion-and-reflections)
+- **Virtual network** segmented into subnets with NSG rules locking down traffic to only what's needed — SSH from my IP to the Jump Box, HTTP from the load balancer to the web VMs, and nothing else
+- **Jump Box** as the single entry point. All VM management goes through it, so the web servers never need direct SSH exposure to the internet
+- **3 web servers** running DVWA in Docker containers, deployed and configured identically via Ansible playbooks from the Jump Box
+- **Azure Load Balancer** distributing traffic across the web VMs with health probes — I tested failover by stopping containers on individual VMs and confirmed traffic rerouted within seconds
 
-## Project Overview
-
-### Objectives
-
-- **Design a Secure Virtual Network**: Establish a virtual network within Azure, segmented into subnets and secured with Network Security Groups (NSGs).
-- **Implement a Jump Box for Secure Access**: Deploy a Jump Box to manage access to the virtual machines securely.
-- **Deploy Web Servers with Docker Containers**: Use Docker to deploy web servers running the Damn Vulnerable Web Application (DVWA).
-- **Automate Deployment with Ansible**: Leverage Ansible for automating the configuration and deployment of VMs and Docker containers.
-- **Set Up Load Balancing for High Availability**: Configure an Azure Load Balancer to distribute traffic and ensure availability.
-- **Configure Network Security**: Implement NSGs and firewalls to protect the infrastructure.
-- **Test Redundancy and Failover Capabilities**: Validate the system's ability to handle failures gracefully.
-- **Conduct Security Assessments**: Perform penetration testing and vulnerability assessments.
-
-### Tools and Technologies
-
-- Microsoft Azure
-- Ansible
-- Docker
-- LEMP Stack (Linux, Nginx, MariaDB, PHP)
-- Jump Box
-- Network Security Groups (NSGs)
-- Azure Load Balancer
-- Damn Vulnerable Web Application (DVWA)
-
-For a detailed project report, please refer to the [Project Report](Azure_Project_Report.pdf).
-
-## Architecture Diagram
+## Architecture
 
 ![Network Architecture Diagram](Network_Diagram.png)
 
-*The diagram illustrates the Azure Virtual Network, subnets, Jump Box, web servers, load balancer, and their interconnections.*
+The network diagram shows the full topology — virtual network, subnets, NSG rules, Jump Box, web server pool, and load balancer configuration.
 
-## Results and Findings
+## What I Learned
 
-- **High Availability and Redundancy**: The implementation of an Azure Load Balancer alongside multiple web servers ensured continuous availability of the web application. Even during simulated failures, the load balancer successfully redirected traffic to healthy servers, demonstrating effective redundancy and failover capabilities.
+The Ansible piece was the most valuable part for me. Manually configuring 3 identical VMs would have been tedious and error-prone — writing the playbook took longer upfront but meant I could tear down and rebuild the entire environment in minutes. That's basically how I approach my homelab now, just with Docker Compose instead of Ansible.
 
-- **Enhanced Security Posture**: By employing Network Security Groups (NSGs) and a Jump Box, the network was secured against unauthorized access. The Jump Box acted as a secure gateway, limiting exposure of the virtual machines to the internet. NSGs enforced strict traffic rules, reducing the attack surface and protecting the infrastructure from potential threats.
+## Tools
 
-- **Automation and Efficiency**: Utilizing Ansible for automation streamlined the deployment and configuration processes. This approach minimized manual errors and ensured consistency across the environment, allowing for rapid scaling and easy replication of the infrastructure.
+Microsoft Azure, Ansible, Docker, DVWA, NSGs, Azure Load Balancer
 
-- **Successful Security Testing**: Penetration testing and vulnerability assessments were conducted to evaluate the security of the setup. The tests confirmed that the implemented security measures effectively protected the infrastructure against common threats, validating the robustness of the security configurations.
+## Report
 
-## Skills Demonstrated
+Full project report with configuration details and security assessment: **[Azure Project Report (PDF)](Azure_Project_Report.pdf)**
 
-- Cloud Infrastructure Design and Deployment (Azure)
-- Network Security Group (NSG) Configuration
-- Infrastructure Automation with Ansible
-- Docker Container Deployment and Management
-- Load Balancing and High Availability Architecture
-- Security Assessment and Penetration Testing
-- Defense-in-Depth Strategy Implementation
+## Context
 
-## Conclusion and Reflections
-
-This project was a comprehensive exercise in designing and deploying a secure, scalable, and highly available web application infrastructure on Microsoft Azure. It reinforced my understanding of cloud security principles and highlighted the critical role of automation in modern IT environments. Implementing robust security measures, such as Network Security Groups and a Jump Box, emphasized the necessity of defense-in-depth strategies. The experience also underscored the value of redundancy and load balancing in achieving high availability. Overall, this project enhanced my skills in cloud computing, network security, and automation, aligning well with the requirements of a cybersecurity professional.
+Cloud security project for UofT's cybersecurity certificate program.
