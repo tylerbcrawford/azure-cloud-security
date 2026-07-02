@@ -5,34 +5,34 @@
 
 # Azure Cloud Security Lab
 
-Secure web application deployment on Azure — virtual network, Docker containers, Ansible automation, and load balancing. UofT cybersecurity program (2024).
+Secure web application deployment on Azure — virtual network, Docker containers, Ansible provisioning, and load balancing. UofT cybersecurity program (2024).
 
 ## What I Built
 
-A multi-VM setup on Azure running DVWA (Damn Vulnerable Web Application) behind a load balancer, managed through a Jump Box:
+A multi-VM setup on Azure running DVWA (Damn Vulnerable Web Application) behind a load balancer, managed through a gateway VM:
 
-- **Virtual network** segmented into subnets with NSG rules locking down traffic to only what's needed — SSH from my IP to the Jump Box, HTTP from the load balancer to the web VMs, and nothing else
-- **Jump Box** as the single entry point. All VM management goes through it, so the web servers never need direct SSH exposure to the internet
-- **3 web servers** running DVWA in Docker containers, deployed and configured identically via Ansible playbooks from the Jump Box
-- **Azure Load Balancer** distributing traffic across the web VMs with health probes — I tested failover by stopping containers on individual VMs and confirmed traffic rerouted within seconds
+- **Virtual network** (`10.0.0.0/16`) with a subnet (`10.0.0.0/24`) and NSG rules locking down traffic to only what's needed — SSH from my workstation to the gateway, HTTP from the load balancer to the web VMs, and nothing else
+- **Gateway VM (`RedTeamSecGW`)** as the single entry point. All VM management goes through it, so the web servers never need direct SSH exposure to the internet
+- **Two web servers (`RedTeamWeb1`, `RedTeamWeb2`)** running DVWA in Docker containers, provisioned from the gateway. The gateway is labeled Ansible + Docker on the network diagram; the playbooks themselves are not included in this repo
+- **Azure Load Balancer** distributing traffic across the web VMs with health probes. I tested failover by stopping the container on one VM and confirmed traffic rerouted to the healthy VM
 
 ## Architecture
 
 ![Network Architecture Diagram](Network_Diagram.png)
 
-The network diagram shows the full topology — virtual network, subnets, NSG rules, Jump Box, web server pool, and load balancer configuration.
+The network diagram shows the full topology — resource group, virtual network and subnet, NSG, NAT, the `RedTeamSecGW` gateway, the two DVWA web VMs, and the Azure Load Balancer backend pool.
 
 ## What I Learned
 
-The Ansible piece was the most valuable part for me. Manually configuring 3 identical VMs would have been tedious and error-prone — writing the playbook took longer upfront but meant I could tear down and rebuild the entire environment in minutes. That's basically how I approach my homelab now, just with Docker Compose instead of Ansible.
+The provisioning piece was the most valuable part for me. Configuring the web VMs by hand would have been slow and easy to get wrong, so managing them from the gateway with Ansible and Docker meant I could rebuild the environment from a known state. That's basically how I approach my homelab now, with Docker Compose in place of Ansible.
+
+## Companion Technical Brief
+
+The repo also includes an Azure cloud-security technical brief from the same program. It documents a separate exercise: hardening an Azure-hosted web application. It covers WAF custom rules (including the SQL-injection managed rule and geo-blocking), SSL/TLS certificate binding and validity, and the role of an Azure Key Vault for keys, secrets, and certificates: **[Azure Project Report (PDF)](Azure_Project_Report.pdf)**
 
 ## Tools
 
-Microsoft Azure, Ansible, Docker, DVWA, NSGs, Azure Load Balancer
-
-## Report
-
-Full project report with configuration details and security assessment: **[Azure Project Report (PDF)](Azure_Project_Report.pdf)**
+Microsoft Azure, Ansible, Docker, DVWA, NSGs, Azure Load Balancer, Azure WAF, Azure Key Vault
 
 ## Context
 
